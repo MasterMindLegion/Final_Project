@@ -15,19 +15,13 @@ class CreateCharitiesTable extends Migration
     {
         Schema::create('charities', function (Blueprint $table) {
             $table->bigIncrements('id');
-            // $table->bigIncrements('customer_id');
-            $table->longText('Name');
-            $table->longText('Char_address');
-            $table->longText('Char_information');
+            $table->longText('Name')->nullable()->default(null);
+            $table->longText('Char_address')->nullable()->default(null);
+            $table->longText('Char_information')->nullable()->default(null);
             $table->timestamps();
         });
-
-
-
-
         Schema::table('charities', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id');
-
             $table->foreign('user_id')->references('id')->on('users');
         });
     }

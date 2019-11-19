@@ -4,7 +4,8 @@ import { Collapse, Navbar,NavbarToggler, NavbarBrand,Nav, NavItem,
 import { Link } from 'react-router-dom';
 import ModalNavigationLogin from './Modals/ModalNavigationLogin.jsx';
 import ModalNavigationRegister from './Modals/ModalNavigationRegister.jsx';
-
+import CharityRegister from '../Auth/CharityRegister.jsx';
+//import CharityRegister from './Components/Auth/CharityRegister.jsx';
 
 export default class Navigation extends React.Component {
 
@@ -37,6 +38,9 @@ export default class Navigation extends React.Component {
             <NavItem>       
               <ModalNavigationRegister />  
             </NavItem>
+            <NavItem >
+             <Link to= "/app/registerCharity"> registerCharity</Link>
+             </ NavItem >
           </Nav>
         </Collapse>   
       </Navbar>

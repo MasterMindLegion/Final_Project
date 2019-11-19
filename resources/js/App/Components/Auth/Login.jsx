@@ -63,13 +63,11 @@ class Login extends React.Component {
       console.log("DATA", data)
       console.log("DATA", data.status )
       console.log("DATA", this.props.loginStatus )
-      console.log("DATA", this.state.token  )
-        if (data.status === 'success' && this.props.loginStatus === "Login" && this.state.token === null) {
+
+        if (data.status === 'success' && this.props.loginStatus === "Login") {
            window.localStorage.setItem('_token', data.success.token);
            this.props.loginFunction();
-           this.setState({
-             token: data.success.token,
-           });
+           this.props.setAuthToken(data.success.token)
 
            if(data.role_id === 1) {
              console.log('im admin');
@@ -86,9 +84,9 @@ class Login extends React.Component {
     })
    }
     render() {
-      console.log("Render, token", this.state.token)
+ 
       console.log("Render", this.props.loginStatus)
-      console.log("Render", this.props.loginSuccess)
+      console.log("[Login] loginSuccess", this.props.loginSuccess)
         return (
           <>
            <h1>Please Login Here</h1>

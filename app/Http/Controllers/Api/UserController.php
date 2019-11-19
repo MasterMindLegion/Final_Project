@@ -10,6 +10,7 @@ use Validator;
 use App\Role;
 class UserController extends Controller
 {
+
     public $successStatus = 200;
    
     /** 
@@ -18,6 +19,9 @@ class UserController extends Controller
          * @return \Illuminate\Http\Response 
          */ 
         public function login(){ 
+            
+            // add credentials? link:https://blog.pusher.com/build-rest-api-laravel-api-resources/
+
             if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){ 
                 $user = Auth::user(); 
                 $success['token'] =  $user->createToken('MyApp')-> accessToken;

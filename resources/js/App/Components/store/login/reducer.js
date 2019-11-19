@@ -10,11 +10,10 @@ const registerAction = {
 }
 const initialState = {
   //Login State
-  loginSuccess: false,
+  loginSuccess: !!window.localStorage.getItem('_token'),
+  token: window.localStorage.getItem('_token'),
   loginStatus: "Login",
-
   //Register State
-  
 }
 
 export const reducer = (state = initialState, action) => {
