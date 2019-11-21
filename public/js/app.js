@@ -53260,7 +53260,6 @@ module.exports = function(originalModule) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return App; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
@@ -53268,8 +53267,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Auth_Login_jsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Auth/Login.jsx */ "./resources/js/App/Components/Auth/Login.jsx");
 /* harmony import */ var _Layout_NotFoundPage_jsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Layout/NotFoundPage.jsx */ "./resources/js/App/Components/Layout/NotFoundPage.jsx");
 /* harmony import */ var _Pages_HomePage_jsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Pages/HomePage.jsx */ "./resources/js/App/Components/Pages/HomePage.jsx");
-/* harmony import */ var _Auth_CharityRegister_jsx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Auth/CharityRegister.jsx */ "./resources/js/App/Components/Auth/CharityRegister.jsx");
-/* harmony import */ var _Pages_Protected_jsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Pages/Protected.jsx */ "./resources/js/App/Components/Pages/Protected.jsx");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _Auth_CharityRegister_jsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Auth/CharityRegister.jsx */ "./resources/js/App/Components/Auth/CharityRegister.jsx");
+/* harmony import */ var _Pages_Protected_jsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Pages/Protected.jsx */ "./resources/js/App/Components/Pages/Protected.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -53289,6 +53289,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -53326,7 +53327,6 @@ function (_React$Component) {
   _createClass(App, [{
     key: "render",
     value: function render() {
-      console.log(this.state.token);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["BrowserRouter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
         exact: true,
         path: "/",
@@ -53340,10 +53340,10 @@ function (_React$Component) {
         path: "/app/login"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Auth_Login_jsx__WEBPACK_IMPORTED_MODULE_3__["default"], {
         setAuthToken: this.setAuthToken
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Pages_Protected_jsx__WEBPACK_IMPORTED_MODULE_7__["default"], {
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Pages_Protected_jsx__WEBPACK_IMPORTED_MODULE_8__["default"], {
         exact: true,
         path: "/app/registerCharity"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Auth_CharityRegister_jsx__WEBPACK_IMPORTED_MODULE_6__["default"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Auth_CharityRegister_jsx__WEBPACK_IMPORTED_MODULE_7__["default"], {
         tooken: this.state.token
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
         path: "*",
@@ -53355,7 +53355,14 @@ function (_React$Component) {
   return App;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    loginStatus: state.loginStatus,
+    loginSuccess: state.loginSuccess
+  };
+};
 
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_6__["connect"])(mapStateToProps)(App));
 
 /***/ }),
 
@@ -53373,6 +53380,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
+/* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./../../../app */ "./resources/js/app.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -53392,6 +53400,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -53430,14 +53439,15 @@ function (_React$Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "handleFormSubmit", function (event) {
+      console.log("[HANDLE FORM] token", _this.state.localToken);
       event.preventDefault();
-      console.log("[HANDLE FORM]", _this.props.token);
+      console.log("[HANDLE FORM] token", _this.state.localToken);
       fetch('/api/registerCharity', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + _this.props.token
+          'Authorization': 'Bearer ' + _this.state.localToken
         },
         body: JSON.stringify({
           name: _this.state.name,
@@ -53446,17 +53456,18 @@ function (_React$Component) {
         })
       }).then(function (response) {
         return response.json();
-      }).then(function (data) {
-        console.log(data);
-      });
+      }).then(function (data) {});
     });
 
     console.log("[charityRegister], token redux", _this.props.token);
+    console.log("[charityRegister], tooken appr", _this.props.tooken);
+    console.log("global store charity react", _app__WEBPACK_IMPORTED_MODULE_4__["store"].getState());
+    console.log("from local storage", window.localStorage.getItem('_token'));
     _this.state = {
       name: '',
       adress: '',
-      information: '' //user_id: '',
-
+      information: '',
+      localToken: window.localStorage.getItem('_token')
     };
     return _this;
   }
@@ -53513,8 +53524,7 @@ function (_React$Component) {
 var mapStateToProps = function mapStateToProps(state) {
   return {
     loginStatus: state.loginStatus,
-    loginSuccess: state.loginSuccess,
-    token: state.token
+    loginSuccess: state.loginSuccess
   };
 }; //what is connect?
 
@@ -53588,8 +53598,6 @@ function (_React$Component) {
 
     _defineProperty(_assertThisInitialized(_this), "handleLogout", function () {
       if (_this.props.loginStatus === "Logout") {
-        console.log("Logout being called");
-        console.log("Logout", _this.props.loginStatus);
         window.localStorage.clear();
 
         _this.setState({
@@ -53615,10 +53623,6 @@ function (_React$Component) {
       }).then(function (response) {
         return response.json();
       }).then(function (data) {
-        console.log("DATA", data);
-        console.log("DATA", data.status);
-        console.log("DATA", _this.props.loginStatus);
-
         if (data.status === 'success' && _this.props.loginStatus === "Login") {
           window.localStorage.setItem('_token', data.success.token);
 
@@ -53655,7 +53659,6 @@ function (_React$Component) {
 
       if (token !== null) {
         this.props.loginFunction();
-        console.log("Component did mount", this.props.loginFunction());
       }
     }
   }, {
@@ -53701,7 +53704,8 @@ function (_React$Component) {
 var mapStateToProps = function mapStateToProps(state) {
   return {
     loginStatus: state.loginStatus,
-    loginSuccess: state.loginSuccess
+    loginSuccess: state.loginSuccess,
+    token: state.token
   };
 }; // What Actions be used
 
@@ -53716,6 +53720,11 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     logoutFunction: function logoutFunction() {
       return dispatch({
         type: "logout"
+      });
+    },
+    tokenAction: function tokenAction() {
+      return dispatch({
+        type: "recieveToken"
       });
     }
   };
@@ -53953,7 +53962,6 @@ var ModalNavigationLogin = function ModalNavigationLogin(props) {
     setLoginValue(value);
   };
 
-  console.log("Login status in", props.loginStatus);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
     color: "danger",
     onClick: toggle
@@ -54333,14 +54341,17 @@ var loginAction = {
 };
 var logoutAction = {
   type: "logout"
-};
-var registerAction = {
-  type: "logout"
-};
+}; // !!!!
+// const tokenAction = (tokenArg) => {
+//   return {
+//     type: "recieveToken",
+//     payload: tokenArg 
+//   }
+// }
+
 var initialState = {
   //Login State
   loginSuccess: !!window.localStorage.getItem('_token'),
-  token: window.localStorage.getItem('_token'),
   loginStatus: "Login" //Register State
 
 };
@@ -54372,11 +54383,12 @@ var reducer = function reducer() {
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
   \*****************************/
-/*! no exports provided */
+/*! exports provided: store */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "store", function() { return store; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
@@ -54398,7 +54410,7 @@ __webpack_require__.r(__webpack_exports__);
  // Store
 
 var store = Object(redux__WEBPACK_IMPORTED_MODULE_2__["createStore"])(_App_Components_store_login_reducer_js__WEBPACK_IMPORTED_MODULE_7__["reducer"]);
-console.log(store.getState().loginStatus);
+console.log("parent component react", store.getState());
 react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_3__["Provider"], {
   store: store
 }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_App_Components_App_jsx__WEBPACK_IMPORTED_MODULE_5__["default"], null), " "), document.getElementById('app'));

@@ -24,19 +24,14 @@ class Login extends React.Component {
         password: event.target.value,
       })  
     }
-    
     componentDidMount() {
       let token = window.localStorage.getItem('_token');
       if(token !== null) {
        this.props.loginFunction();
-       console.log("Component did mount", this.props.loginFunction())
       }
       } 
-
     handleLogout = () => {
       if(this.props.loginStatus === "Logout" ) {
-        console.log("Logout being called")
-        console.log("Logout",this.props.loginStatus )
         window.localStorage.clear();
         this.setState({
           token: null,
@@ -60,15 +55,11 @@ class Login extends React.Component {
     })
     .then(response => response.json())
     .then(data => {  
-      console.log("DATA", data)
-      console.log("DATA", data.status )
-      console.log("DATA", this.props.loginStatus )
-
         if (data.status === 'success' && this.props.loginStatus === "Login") {
            window.localStorage.setItem('_token', data.success.token);
            this.props.loginFunction();
-           this.props.setAuthToken(data.success.token)
-
+           this.props.setAuthToken(data.success.token);
+       
            if(data.role_id === 1) {
              console.log('im admin');
   
@@ -121,6 +112,7 @@ const mapStateToProps = state => {
    return {
      loginStatus: state.loginStatus,
      loginSuccess: state.loginSuccess,
+     token: state.token
    };
  }
 
@@ -128,7 +120,8 @@ const mapStateToProps = state => {
  const mapDispatchToProps = dispatch => {
    return {
     loginFunction : () => dispatch({type: "login"}),
-    logoutFunction : () => dispatch({type: "logout"})
+    logoutFunction : () => dispatch({type: "logout"}),
+    tokenAction : () => dispatch({type: "recieveToken"})
   }
 }
 //what is connect?

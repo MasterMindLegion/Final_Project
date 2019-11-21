@@ -26,7 +26,7 @@ const ModalNavigationLogin = (props) => {
     console.log("props.loginStatusFromChild", props.loginStatusFromChild);
     setLoginValue(value);
   }
- console.log("Login status in", props.loginStatus)
+ 
   return (
     <div>
   <Button color="danger" onClick={toggle}>{buttonLabel} {props.loginStatus}</Button>
@@ -41,7 +41,6 @@ const ModalNavigationLogin = (props) => {
     </div>
   );
 }
-
 //==========
 // REDUX
 //==========

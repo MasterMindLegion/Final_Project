@@ -2,13 +2,10 @@ import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Button } from 'reactstrap';
 import { Form, FormGroup, Label, Input, FormText,  } from 'reactstrap';
-
-
  
  class Register extends React.Component {
     constructor(props) {
         super(props);
-
     this.state = {
       name : '',
       email: '',
@@ -17,7 +14,6 @@ import { Form, FormGroup, Label, Input, FormText,  } from 'reactstrap';
       registerErrors: [],
     }
   }
-  
     handleNameChange = (event) => {
       this.setState({
         name: event.target.value
@@ -93,5 +89,4 @@ import { Form, FormGroup, Label, Input, FormText,  } from 'reactstrap';
         )
     }
 }
-
 export default Register

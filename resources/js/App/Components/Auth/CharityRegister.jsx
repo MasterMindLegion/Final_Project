@@ -3,19 +3,23 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Button } from 'reactstrap';
 import { Form, FormGroup, Label, Input, FormText,  } from 'reactstrap';
-
-
- 
+import {store} from './../../../app';
  class CharityRegister extends React.Component {
     constructor(props) {
         super(props);
+
+        
         console.log("[charityRegister], token redux", this.props.token)
+        console.log("[charityRegister], tooken appr", this.props.tooken)
+        console.log("global store charity react", store.getState())
+        console.log("from local storage", window.localStorage.getItem('_token'));
+
 
     this.state = {
       name : '',
       adress: '',
       information: '',
-      //user_id: '',
+      localToken: window.localStorage.getItem('_token')
     }
   }
     handleNameChange = (event) => {
@@ -34,14 +38,15 @@ import { Form, FormGroup, Label, Input, FormText,  } from 'reactstrap';
         });
     }
   handleFormSubmit = (event) => {
+    console.log("[HANDLE FORM] token", this.state.localToken)
     event.preventDefault();
-    console.log("[HANDLE FORM]", this.props.token)
+    console.log("[HANDLE FORM] token", this.state.localToken)
     fetch('/api/registerCharity', {
         method: 'POST',
         headers: {
             'Accept':       'application/json',
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + this.props.token
+            'Authorization': 'Bearer ' + this.state.localToken
         },
         body: JSON.stringify({
             name: this.state.name,
@@ -51,7 +56,6 @@ import { Form, FormGroup, Label, Input, FormText,  } from 'reactstrap';
     })
     .then(response => response.json())
     .then(data => {
-      console.log(data)
     })
 }
     render() {
@@ -88,7 +92,7 @@ const mapStateToProps = state => {
   return {
     loginStatus: state.loginStatus,
     loginSuccess: state.loginSuccess,
-    token: state.token
+
   };
 }
 //what is connect?

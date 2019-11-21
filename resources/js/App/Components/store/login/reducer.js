@@ -5,17 +5,21 @@ const loginAction = {
 const logoutAction = {
   type: "logout"
 }
-const registerAction = {
-  type: "logout"
-}
+// !!!!
+// const tokenAction = (tokenArg) => {
+//   return {
+//     type: "recieveToken",
+//     payload: tokenArg 
+
+
+//   }
+// }
 const initialState = {
   //Login State
-  loginSuccess: !!window.localStorage.getItem('_token'),
-  token: window.localStorage.getItem('_token'),
+  loginSuccess: !!window.localStorage.getItem('_token'), 
   loginStatus: "Login",
   //Register State
 }
-
 export const reducer = (state = initialState, action) => {
   switch(action.type) {
     case "login":

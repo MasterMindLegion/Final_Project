@@ -4,19 +4,18 @@ import Register from './Auth/Register.jsx';
 import Login from './Auth/Login.jsx';
 import NotFoundPage from './Layout/NotFoundPage.jsx';
 import HomePage from './Pages/HomePage.jsx';
+import { connect } from 'react-redux';
 
 import CharityRegister from './Auth/CharityRegister.jsx';
 import PrivateRoute from './Pages/Protected.jsx';
 
-export default class App extends React.Component {
+class App extends React.Component {
     constructor(props) {
         super(props); 
-
         this.state = {
             token : window.localStorage.getItem('_token')
-        }
+        }    
     }
-
     setAuthToken   = (token) => {
         this.setState({
             token: token
@@ -24,7 +23,6 @@ export default class App extends React.Component {
     }
 
     render() {
-        console.log(this.state.token)
         return (
             <BrowserRouter>
             <Switch>
@@ -43,3 +41,11 @@ export default class App extends React.Component {
         )
     }
 }
+const mapStateToProps = state => {
+    return {
+      loginStatus: state.loginStatus,
+      loginSuccess: state.loginSuccess,
+    };
+  }
+ 
+export default connect(mapStateToProps)(App);

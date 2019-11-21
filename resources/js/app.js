@@ -9,8 +9,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {reducer} from './App/Components/store/login/reducer.js';
 
 // Store
-const store = createStore(reducer);
-console.log(store.getState().loginStatus)
+export const store = createStore(reducer);
+console.log("parent component react", store.getState())
 
 ReactDOM.render(
  
