@@ -22,8 +22,6 @@ const ModalNavigationLogin = (props) => {
   
   // Get login value from Login
   const parentLoginValue = (value) =>  { 
-    console.log("props.loginStatus", props.loginStatus);
-    console.log("props.loginStatusFromChild", props.loginStatusFromChild);
     setLoginValue(value);
   }
  

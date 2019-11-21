@@ -18,7 +18,14 @@ class CharityController extends Controller
     //Protected route with react router? or auth here in laravel?
     // What is the second parametr? USER   
     public function registerCharity(Request $request, User $User) {
-     
+    if($request->user()->charity != null){
+      return response()->json([
+        'success' => false, 
+        'error'=>'Yout got charity',
+        'message' => 'Please leave',
+    ], 401); 
+          
+    }else {
         $charity = Charity::create([
             'user_id' => $request->user()->id,
             'Name' => $request->name,
@@ -28,19 +35,16 @@ class CharityController extends Controller
           $user =  $request->user();
           $user->role_id = 1;
           $user->save();
-
-          //$request->user()->role_id 
-        // TASK: when logged in user register charity - change his role 
-         // $role_id = $user->role_id;
+          
           return response()->json([
             'success' => true, 
             'name' => $request->name,
             'message' => 'You have opened a charity',
             'status' => 'success',
-            //'user_id' => $request->user()->id,
-           // 'role_id' => $role_id                
+            'user_id' => $request->user()->id,             
         ], $this->successStatus);    
     }
+  }
     public function canCreateCharity(Request $request) {
       if($request->user()->charity == null) {
         return true;

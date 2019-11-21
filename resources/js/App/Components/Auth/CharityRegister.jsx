@@ -19,7 +19,8 @@ import {store} from './../../../app';
       name : '',
       adress: '',
       information: '',
-      localToken: window.localStorage.getItem('_token')
+      localToken: window.localStorage.getItem('_token'),
+      registerCharity : false,
     }
   }
     handleNameChange = (event) => {
@@ -56,10 +57,23 @@ import {store} from './../../../app';
     })
     .then(response => response.json())
     .then(data => {
+      console.log(data);
+      if(data.success === true) {
+        this.setState({
+          registerCharity: true,
+        })
+      } else {
+        this.setState({
+          registerCharity: false,
+        })
+      }
     })
 }
     render() {
+
+      console.log(this.state.registerCharity);
         return (
+        //  this.state.registerCharity === true ?
           <>
            <h1>Here you can register your charity</h1>
            <Form action="" method="post" onSubmit={this.handleFormSubmit}>
@@ -78,9 +92,9 @@ import {store} from './../../../app';
              <Input type="text" name="register_information" value={this.state.information} onChange={this.handleInformationChange}  placeholder="Enter information" id="register_information"/>
              </FormGroup>        
               <Button type="submit" value="Submit" color="danger">Submit</Button>       
-           </Form>
+           </Form> 
           </>
- 
+      //  : <h1>You allready have one</h1>
         )
     }
 }

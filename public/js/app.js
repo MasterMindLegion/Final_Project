@@ -53456,7 +53456,19 @@ function (_React$Component) {
         })
       }).then(function (response) {
         return response.json();
-      }).then(function (data) {});
+      }).then(function (data) {
+        console.log(data);
+
+        if (data.success === true) {
+          _this.setState({
+            registerCharity: true
+          });
+        } else {
+          _this.setState({
+            registerCharity: false
+          });
+        }
+      });
     });
 
     console.log("[charityRegister], token redux", _this.props.token);
@@ -53467,7 +53479,8 @@ function (_React$Component) {
       name: '',
       adress: '',
       information: '',
-      localToken: window.localStorage.getItem('_token')
+      localToken: window.localStorage.getItem('_token'),
+      registerCharity: false
     };
     return _this;
   }
@@ -53475,42 +53488,46 @@ function (_React$Component) {
   _createClass(CharityRegister, [{
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Here you can register your charity"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Form"], {
-        action: "",
-        method: "post",
-        onSubmit: this.handleFormSubmit
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["FormGroup"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Label"], {
-        htmlFor: "register_charity_name"
-      }, "Name"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Input"], {
-        type: "text",
-        name: "register_charity_name",
-        value: this.state.name,
-        onChange: this.handleNameChange,
-        placeholder: "Enter Your Charity",
-        id: "register_charity_name"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["FormGroup"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Label"], {
-        htmlFor: "register_adress"
-      }, "Adress"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Input"], {
-        type: "text",
-        name: "register_adress",
-        value: this.state.adress,
-        onChange: this.handleAdressChange,
-        placeholder: "Enter Your Adress",
-        id: "register_adress"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["FormGroup"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Label"], {
-        htmlFor: "register_information"
-      }, "Enter information"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Input"], {
-        type: "text",
-        name: "register_information",
-        value: this.state.information,
-        onChange: this.handleInformationChange,
-        placeholder: "Enter information",
-        id: "register_information"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Button"], {
-        type: "submit",
-        value: "Submit",
-        color: "danger"
-      }, "Submit")));
+      console.log(this.state.registerCharity);
+      return (//  this.state.registerCharity === true ?
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Here you can register your charity"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Form"], {
+          action: "",
+          method: "post",
+          onSubmit: this.handleFormSubmit
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["FormGroup"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Label"], {
+          htmlFor: "register_charity_name"
+        }, "Name"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Input"], {
+          type: "text",
+          name: "register_charity_name",
+          value: this.state.name,
+          onChange: this.handleNameChange,
+          placeholder: "Enter Your Charity",
+          id: "register_charity_name"
+        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["FormGroup"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Label"], {
+          htmlFor: "register_adress"
+        }, "Adress"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Input"], {
+          type: "text",
+          name: "register_adress",
+          value: this.state.adress,
+          onChange: this.handleAdressChange,
+          placeholder: "Enter Your Adress",
+          id: "register_adress"
+        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["FormGroup"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Label"], {
+          htmlFor: "register_information"
+        }, "Enter information"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Input"], {
+          type: "text",
+          name: "register_information",
+          value: this.state.information,
+          onChange: this.handleInformationChange,
+          placeholder: "Enter information",
+          id: "register_information"
+        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Button"], {
+          type: "submit",
+          value: "Submit",
+          color: "danger"
+        }, "Submit"))) //  : <h1>You allready have one</h1>
+
+      );
     }
   }]);
 
@@ -53957,8 +53974,6 @@ var ModalNavigationLogin = function ModalNavigationLogin(props) {
 
 
   var parentLoginValue = function parentLoginValue(value) {
-    console.log("props.loginStatus", props.loginStatus);
-    console.log("props.loginStatusFromChild", props.loginStatusFromChild);
     setLoginValue(value);
   };
 
