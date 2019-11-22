@@ -26,12 +26,14 @@ class UserController extends Controller
                 $user = Auth::user(); 
                 $success['token'] =  $user->createToken('MyApp')-> accessToken;
                 $role_id = $user->role_id == null ? 2 : $user->role_id;
+                //  $hasCharity = $user->charity != null;
+                // dd($hasCharity);
                 return response()->json([
                     'success' => $success, 
                     'token_type' => "Bearer",
                     'message' => 'You are authorized to access',
                     'status' => 'success',
-                    'role_id' => $role_id                
+                    'role_id' => $role_id ,            
                 ], $this-> successStatus); 
             } 
             else{ 

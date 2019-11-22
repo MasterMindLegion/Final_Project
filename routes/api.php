@@ -23,12 +23,13 @@ Route::post('register', 'API\UserController@register');
 
 
 Route::group(['middleware' => 'auth:api'], function(){
+  Route::post('auth/charity', 'API\CharityController@canCreateCharity');
   Route::post('registerCharity', 'API\CharityController@registerCharity');
   Route::post('details', 'API\UserController@details');
 });
 Route::get('items', 'API\ItemController@index');
+Route::get('displayCharities', 'API\CharityController@index');
 
-Route::get('auth/charity/{user_id}', 'API\AuthRegisterCharity@authCharity');
 
 // Route::post('/login', 'Api\LoginController@login');
 // Route::post('/register', 'Api\RegisterController@register');

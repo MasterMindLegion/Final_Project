@@ -12,16 +12,8 @@ import PrivateRoute from './Pages/Protected.jsx';
 class App extends React.Component {
     constructor(props) {
         super(props); 
-        this.state = {
-            token : window.localStorage.getItem('_token')
-        }    
+        console.log(this.props)
     }
-    setAuthToken   = (token) => {
-        this.setState({
-            token: token
-        })
-    }
-
     render() {
         return (
             <BrowserRouter>
@@ -29,13 +21,13 @@ class App extends React.Component {
                 <Route exact path="/" component={HomePage}/>
                  <Route exact path="/app/register" component={Register}/>           
                <Route exact path="/app/login">
-                   <Login setAuthToken={this.setAuthToken}/>
+                   <Login/>
                </Route>           
                <PrivateRoute exact path="/app/registerCharity">
-                    <CharityRegister tooken={ this.state.token } />
+                    <CharityRegister/>
                 </PrivateRoute>
               {/* <Route exact path="/app/login" component={Login} /> */}
-              <Route path="*" component={NotFoundPage} />
+               <Route path="*" component={NotFoundPage} /> 
             </Switch>
             </BrowserRouter>
         )
@@ -43,9 +35,8 @@ class App extends React.Component {
 }
 const mapStateToProps = state => {
     return {
-      loginStatus: state.loginStatus,
-      loginSuccess: state.loginSuccess,
+      loginStatus: state.loginReducer.loginStatus,
+      loginSuccess: state.loginReducer.loginSuccess,
     };
   }
- 
 export default connect(mapStateToProps)(App);

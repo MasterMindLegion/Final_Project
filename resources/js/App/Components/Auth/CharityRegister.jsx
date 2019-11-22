@@ -7,21 +7,12 @@ import {store} from './../../../app';
  class CharityRegister extends React.Component {
     constructor(props) {
         super(props);
-
-        
-        console.log("[charityRegister], token redux", this.props.token)
-        console.log("[charityRegister], tooken appr", this.props.tooken)
-        console.log("global store charity react", store.getState())
-        console.log("from local storage", window.localStorage.getItem('_token'));
-
-
     this.state = {
       name : '',
       adress: '',
       information: '',
       localToken: window.localStorage.getItem('_token'),
-      registerCharity : false,
-    }
+      }
   }
     handleNameChange = (event) => {
       this.setState({
@@ -38,10 +29,11 @@ import {store} from './../../../app';
             information: event.target.value
         });
     }
+    componentDidMount() {
+      
+    }
   handleFormSubmit = (event) => {
-    console.log("[HANDLE FORM] token", this.state.localToken)
     event.preventDefault();
-    console.log("[HANDLE FORM] token", this.state.localToken)
     fetch('/api/registerCharity', {
         method: 'POST',
         headers: {
@@ -57,24 +49,18 @@ import {store} from './../../../app';
     })
     .then(response => response.json())
     .then(data => {
-      console.log(data);
-      if(data.success === true) {
-        this.setState({
-          registerCharity: true,
-        })
-      } else {
-        this.setState({
-          registerCharity: false,
-        })
-      }
     })
 }
     render() {
-
-      console.log(this.state.registerCharity);
+      console.log("render from ch reg", this.props.registerCharity)
         return (
-        //  this.state.registerCharity === true ?
           <>
+
+         {this.props.charityRegister == true            
+         ? <h1>allowed</h1>
+         : <h1>Not </h1>
+         }
+
            <h1>Here you can register your charity</h1>
            <Form action="" method="post" onSubmit={this.handleFormSubmit}>
              <FormGroup>
@@ -94,7 +80,6 @@ import {store} from './../../../app';
               <Button type="submit" value="Submit" color="danger">Submit</Button>       
            </Form> 
           </>
-      //  : <h1>You allready have one</h1>
         )
     }
 }
@@ -106,8 +91,16 @@ const mapStateToProps = state => {
   return {
     loginStatus: state.loginStatus,
     loginSuccess: state.loginSuccess,
-
+    registerCharity: state.registerCharity,
   };
 }
+
+// What Actions be used
+const mapDispatchToProps = dispatch => {
+  return {
+   registerCharityFalse : () => dispatch({type: "CHARITY_FALSE"}),
+   registerCharityTrue : () => dispatch({type: "CHARITY_TRUE"}),
+ }
+}
 //what is connect?
-export default connect(mapStateToProps)(CharityRegister);
+export default connect(mapStateToProps, mapDispatchToProps)(CharityRegister);

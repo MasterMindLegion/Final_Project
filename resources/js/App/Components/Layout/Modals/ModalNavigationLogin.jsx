@@ -27,13 +27,13 @@ const ModalNavigationLogin = (props) => {
  
   return (
     <div>
-  <Button color="danger" onClick={toggle}>{buttonLabel} {props.loginStatus}</Button>
+  <Button color="danger" onClick={toggle}>{buttonLabel} {'[modalLogin] login'}</Button>
       <Modal isOpen={modal} toggle={toggle} className={className}>
         <ModalHeader toggle={toggle}>Modal title</ModalHeader>
         <ModalBody>
-          <Login {...props} modalStatus={modal} 
-          childLoginStatus = { parentLoginStatus } 
-          childLoginValue = {parentLoginValue} />
+          <Login 
+          
+           />
         </ModalBody>
       </Modal>
     </div>
