@@ -57190,6 +57190,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Pages_Protected_jsx__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Pages/Protected.jsx */ "./resources/js/App/Components/Pages/Protected.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -57198,13 +57202,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
@@ -57223,18 +57229,90 @@ function (_React$Component) {
   _inherits(App, _React$Component);
 
   function App(props) {
+    var _this;
+
     _classCallCheck(this, App);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(App).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(App).call(this, props));
+
+    _defineProperty(_assertThisInitialized(_this), "addItemToCart", function (newItem) {
+      _this.setState(function (prevState) {
+        var hasItem = !!prevState.cart.find(function (item) {
+          return item.name === newItem.name;
+        });
+        var newCart;
+
+        if (hasItem) {
+          newCart = prevState.cart.reduce(function (acc, curr) {
+            if (newItem.name === curr.name) curr.quantity = curr.quantity + 1;
+            return acc.concat(curr);
+          }, []);
+        } else {
+          newCart = prevState.cart.concat(newItem);
+        }
+
+        window.localStorage.setItem("cart", JSON.stringify(newCart));
+        return _objectSpread({}, prevState, {
+          cart: newCart
+        });
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "removeItemFromCart", function (itemName) {
+      _this.setState(function (prevState) {
+        var newCart = prevState.cart.filter(function (item) {
+          return itemName !== item.name;
+        });
+        return _objectSpread({}, prevState, {
+          cart: newCart
+        });
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "decreaseItemInCart", function (itemName) {});
+
+    var cartString = window.localStorage.getItem("cart");
+    var cart = cartString ? JSON.parse(cartString) : [{
+      name: 'nemo'
+    }];
+    _this.state = {
+      token: null,
+      logged_in: null,
+      items: [],
+      cart: cart
+    };
+    return _this;
   }
 
   _createClass(App, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      fetch("http://www.charity.test:8080/api/items").then(function (res) {
+        return res.json();
+      }).then(function (result) {
+        //  console.log("[Homepage] FETCH", result);
+        _this2.setState({
+          isLoaded: true,
+          items: result
+        });
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this3 = this;
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["BrowserRouter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
         exact: true,
         path: "/",
-        component: _Pages_HomePage_jsx__WEBPACK_IMPORTED_MODULE_5__["default"]
+        render: function render() {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Pages_HomePage_jsx__WEBPACK_IMPORTED_MODULE_5__["default"], {
+            items: _this3.state.items,
+            addItemToCart: _this3.addItemToCart
+          });
+        }
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
         exact: true,
         path: "/app/register",
@@ -57248,7 +57326,12 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Auth_CharityRegister_jsx__WEBPACK_IMPORTED_MODULE_8__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
         exact: true,
         path: "/app/cart",
-        component: _Layout_Main_Cart_Cart_jsx__WEBPACK_IMPORTED_MODULE_6__["default"]
+        render: function render() {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Layout_Main_Cart_Cart_jsx__WEBPACK_IMPORTED_MODULE_6__["default"], {
+            items: _this3.state.cart,
+            removeItemFromCart: _this3.removeItemFromCart
+          });
+        }
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
         path: "*",
         component: _Layout_NotFoundPage_jsx__WEBPACK_IMPORTED_MODULE_4__["default"]
@@ -58127,16 +58210,13 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
- //console.log("[CART], one item from map", props);
+
 
 var CartItem = function CartItem(props) {
-  console.log("cartItem", props);
-
   var removeItem = function removeItem() {
     props.removeItemFromCart(props.name);
   };
 
-  console.log("cartItem", props);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["CardDeck"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
     sm: "6"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["Card"], {
@@ -58175,7 +58255,7 @@ var Cart = function Cart(props) {
 
   var localstorage_shoppingCart = JSON.parse(value);
   console.log(localstorage_shoppingCart);
-  var productCard = props.map(function (item, index) {
+  var productCard = props.items.map(function (item, index) {
     console.log("[CART], one item from map", item);
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(CartItem, {
       key: "cartItem-".concat(index),
@@ -58787,10 +58867,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Layout_Footer_Footer_jsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./../Layout/Footer/Footer.jsx */ "./resources/js/App/Components/Layout/Footer/Footer.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -58799,15 +58875,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
@@ -58822,86 +58896,20 @@ function (_React$Component) {
   _inherits(Homepage, _React$Component);
 
   function Homepage(props) {
-    var _this;
-
     _classCallCheck(this, Homepage);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Homepage).call(this, props));
-
-    _defineProperty(_assertThisInitialized(_this), "addItemToCart", function (newItem) {
-      _this.setState(function (prevState) {
-        var hasItem = !!prevState.cart.find(function (item) {
-          return item.name === newItem.name;
-        });
-        var newCart;
-
-        if (hasItem) {
-          newCart = prevState.cart.reduce(function (acc, curr) {
-            if (newItem.name === curr.name) curr.quantity = curr.quantity + 1;
-            return acc.concat(curr);
-          }, []);
-        } else {
-          newCart = prevState.cart.concat(newItem);
-        }
-
-        window.localStorage.setItem("cart", JSON.stringify(newCart));
-        return _objectSpread({}, prevState, {
-          cart: newCart
-        });
-      });
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "removeItemFromCart", function (itemName) {
-      _this.setState(function (prevState) {
-        var newCart = prevState.cart.filter(function (item) {
-          return itemName !== item.name;
-        });
-        return _objectSpread({}, prevState, {
-          cart: newCart
-        });
-      });
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "decreaseItemInCart", function (itemName) {});
-
-    var cartString = window.localStorage.getItem("cart");
-    var cart = cartString ? JSON.parse(cartString) : [{
-      name: 'nemo'
-    }];
-    _this.state = {
-      token: null,
-      logged_in: null,
-      items: [],
-      cart: cart
-    };
-    return _this;
+    return _possibleConstructorReturn(this, _getPrototypeOf(Homepage).call(this, props));
   }
 
   _createClass(Homepage, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      fetch("http://www.charity.test:8080/api/items").then(function (res) {
-        return res.json();
-      }).then(function (result) {
-        //  console.log("[Homepage] FETCH", result);
-        _this2.setState({
-          isLoaded: true,
-          items: result
-        });
-      });
-    }
-  }, {
     key: "render",
     value: function render() {
-      console.log("[HOMEPAGE] CART", this.state.cart);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Layout_Navigation_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        items: this.state.cart,
-        removeItemFromCart: this.removeItemFromCart
+        items: this.props.cart,
+        removeItemFromCart: this.props.removeItemFromCart
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Layout_Main_Main_jsx__WEBPACK_IMPORTED_MODULE_3__["default"], {
-        items: this.state.items,
-        addItemToCart: this.addItemToCart
+        items: this.props.items,
+        addItemToCart: this.props.addItemToCart
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Layout_Footer_Footer_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], null));
     }
   }]);

@@ -15,13 +15,14 @@ import {
     Row,
     CardDeck
 } from "reactstrap";
-//console.log("[CART], one item from map", props);
+
+
 const CartItem = props => {
-    console.log("cartItem", props);
+
     const removeItem =() => {
         props.removeItemFromCart(props.name)
     }
-    console.log("cartItem", props);
+
     return (
 
         <>
@@ -49,6 +50,7 @@ const CartItem = props => {
         </>
     );
 };
+
 const Cart = props => {
     console.log("cart props", props);
     const [value, setValue] = React.useState(localStorage.getItem("cart"));
@@ -56,7 +58,7 @@ const Cart = props => {
     const localstorage_shoppingCart = JSON.parse(value);
     console.log(localstorage_shoppingCart);
 
-    let productCard = props.map((item, index) => {
+    let productCard = props.items.map((item, index) => {
         console.log("[CART], one item from map", item);
         return (
             <CartItem
