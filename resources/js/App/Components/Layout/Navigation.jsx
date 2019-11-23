@@ -13,12 +13,9 @@ import { connect } from 'react-redux';
 
   constructor(props) {
     super(props);
-    console.log("[navigation props]", this.props)
     this.toggle = this.toggle.bind(this);
     this.state = {
       isOpen: false,
-  
-
     };
   }
   toggle() {
@@ -26,10 +23,7 @@ import { connect } from 'react-redux';
       isOpen: !this.state.isOpen
     });
   }
-
   render() {
-    console.log("[navigation] can create charity", this.props.canUserCreateCharity)
-    console.log('props', this.props)
     return (
       <>
         <Navbar color="light" light expand="md">
@@ -62,10 +56,9 @@ import { connect } from 'react-redux';
 //==========
 // What state be used
 const mapStateToProps = state => {
-  console.log('nav state to props', state)
   return {
     loginSuccess: state.loginReducer.loginSuccess,
-    showRegisterLink: false
+    showRegisterLink: state.loginReducer.showRegisterLink
   };
 }
 // What Actions be used

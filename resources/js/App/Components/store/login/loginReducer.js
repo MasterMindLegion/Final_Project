@@ -4,10 +4,10 @@ const loginAction = {
 const logoutAction = {
   type: "logout"
 }
-
 const initialState = {
   loginSuccess: false, 
   showRegisterLink : false,
+  _token: window.localStorage.getItem('_token'),
 }
 export const loginReducer = (state = initialState, action) => {
   switch(action.type) {
@@ -24,13 +24,8 @@ export const loginReducer = (state = initialState, action) => {
       case "setHasCharit" :
           return{
             ...state,
-            showRegisterLink: false,        
+            showRegisterLink: action.showRegisterLink,        
           }
-      case "setHasNotCharit" :
-           return{
-             ...state,
-             showRegisterLink: true,        
-              }
     default:
       return state 
   }

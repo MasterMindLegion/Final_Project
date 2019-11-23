@@ -5,7 +5,6 @@ import { Form, FormGroup, Label, Input, FormText, Button } from 'reactstrap';
 class Login extends React.Component {
   constructor(props) {
     super(props);
-    console.log("[login.jsx] this.props", this.props)
     this.state = {
       email: 'martiin.chalupa@gmail.com',
       password: '1',
@@ -25,11 +24,7 @@ class Login extends React.Component {
   }
 
   componentDidMount() {
-    let token = window.localStorage.getItem('_token');
-    if (token !== null) {
-      console.log('[login], component did mount', token)
-      //this.props.loginFunction();
-    }
+    this.props_token = window.localStorage.getItem('_token');
   }
   handleFormSubmit = (event) => {
     event.preventDefault();
@@ -83,17 +78,16 @@ class Login extends React.Component {
     )
   }
 }
-
 //==========
 // REDUX
 //==========
 // What state be used
 const mapStateToProps = state => {
   return {
-    loginSuccess: state.loginReducer.loginSuccess
+    loginSuccess: state.loginReducer.loginSuccess,
+    _token : state.loginReducer._token
   };
 }
-
 // What Actions be used
 const mapDispatchToProps = dispatch => {
   return {

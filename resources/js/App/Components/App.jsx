@@ -12,7 +12,6 @@ import PrivateRoute from './Pages/Protected.jsx';
 class App extends React.Component {
     constructor(props) {
         super(props); 
-        console.log(this.props)
     }
     render() {
         return (
@@ -37,6 +36,7 @@ const mapStateToProps = state => {
     return {
       loginStatus: state.loginReducer.loginStatus,
       loginSuccess: state.loginReducer.loginSuccess,
+      
     };
   }
 export default connect(mapStateToProps)(App);

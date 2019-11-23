@@ -11,32 +11,36 @@ import { loginReducer } from './App/Components/store/login/loginReducer.js';
 import { charityRegisterReducer } from './App/Components/store/charityRegister/charityRegisterReducer.js';
 import createSagaMiddleware from 'redux-saga';
 import userSagas from './App/Components/sagas/userSagas.js';
+
 // combining two reducers into a single reducer
 const rootReducer = combineReducers({
   loginReducer: loginReducer,
   charityRegisterReducer: charityRegisterReducer
 })
-
 // Store
-
-
 function* rootSaga() {
   yield all([userSagas])
 }
-
 const sagaMiddleware = createSagaMiddleware([rootSaga]);
-
 const makeStore = (initialState) => {
+  const initState = {
+    ...initialState,
+    // How I acccess APP_token? 
+   //  APP_token: window.localStorage.getItem('_token'),
+  }
+  console.log(["[APP], initState", initState]);
   const store = createStore(
-    
     rootReducer,
-    initialState,
+    initState,
     composeWithDevTools(applyMiddleware(sagaMiddleware))
   );
+ 
   sagaMiddleware.run(rootSaga);
   return store;
 }
-const store = makeStore({});
+
+export const store = makeStore({});
+
 ReactDOM.render(
   <Provider store={store}><App /> </Provider>, document.getElementById('app')
 );

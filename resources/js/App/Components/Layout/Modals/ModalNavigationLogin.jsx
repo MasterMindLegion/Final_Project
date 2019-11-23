@@ -19,12 +19,10 @@ const ModalNavigationLogin = (props) => {
     console.log("parentLoginStatus - closing modal");
     setModal(!modal);
   }
-  
   // Get login value from Login
   const parentLoginValue = (value) =>  { 
     setLoginValue(value);
   }
- 
   return (
     <div>
   <Button color="danger" onClick={toggle}>{buttonLabel} {'[modalLogin] login'}</Button>

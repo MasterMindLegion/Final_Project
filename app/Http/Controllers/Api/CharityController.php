@@ -60,6 +60,8 @@ class CharityController extends Controller
       $all_charities = Charity::get();
       return $all_charities;
     }
+
+    
     
 }
 

@@ -57172,13 +57172,9 @@ function (_React$Component) {
   _inherits(App, _React$Component);
 
   function App(props) {
-    var _this;
-
     _classCallCheck(this, App);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(App).call(this, props));
-    console.log(_this.props);
-    return _this;
+    return _possibleConstructorReturn(this, _getPrototypeOf(App).call(this, props));
   }
 
   _createClass(App, [{
@@ -57489,7 +57485,6 @@ function (_React$Component) {
       });
     });
 
-    console.log("[login.jsx] this.props", _this.props);
     _this.state = {
       email: 'martiin.chalupa@gmail.com',
       password: '1',
@@ -57502,11 +57497,7 @@ function (_React$Component) {
   _createClass(Login, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var token = window.localStorage.getItem('_token');
-
-      if (token !== null) {
-        console.log('[login], component did mount', token); //this.props.loginFunction();
-      }
+      this.props_token = window.localStorage.getItem('_token');
     }
   }, {
     key: "render",
@@ -57547,7 +57538,8 @@ function (_React$Component) {
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    loginSuccess: state.loginReducer.loginSuccess
+    loginSuccess: state.loginReducer.loginSuccess,
+    _token: state.loginReducer._token
   };
 }; // What Actions be used
 
@@ -57991,7 +57983,6 @@ function (_React$Component) {
     _classCallCheck(this, Navigation);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Navigation).call(this, props));
-    console.log("[navigation props]", _this.props);
     _this.toggle = _this.toggle.bind(_assertThisInitialized(_this));
     _this.state = {
       isOpen: false
@@ -58009,8 +58000,6 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      console.log("[navigation] can create charity", this.props.canUserCreateCharity);
-      console.log('props', this.props);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__["Navbar"], {
         color: "light",
         light: true,
@@ -58039,10 +58028,9 @@ function (_React$Component) {
 
 
 var mapStateToProps = function mapStateToProps(state) {
-  console.log('nav state to props', state);
   return {
     loginSuccess: state.loginReducer.loginSuccess,
-    showRegisterLink: false
+    showRegisterLink: state.loginReducer.showRegisterLink
   };
 }; // What Actions be used
 
@@ -58250,9 +58238,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! redux-saga/effects */ "./node_modules/redux-saga/dist/redux-saga-effects-npm-proxy.esm.js");
+/* harmony import */ var _app_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../../../app.js */ "./resources/js/app.js");
 
-
-var _this = undefined;
 
 var _marked =
 /*#__PURE__*/
@@ -58260,67 +58247,83 @@ _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(handleLog
 
 
 
-var hasUserCharity = function hasUserCharity(event) {
-  //  event.preventDefault();
-  fetch('/api/auth/charity', {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + window.localStorage.getItem('_token')
-    }
-  }).then(function (response) {
-    return response.json();
-  }).then(function (data) {
-    if (data.status == true) {
-      _this.props.registerCharityTrue();
-    } else {
-      _this.props.registerCharityFalse();
+
+var hasUserCharity = function hasUserCharity() {
+  var state, headers, res, data;
+  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function hasUserCharity$(_context) {
+    while (1) {
+      switch (_context.prev = _context.next) {
+        case 0:
+          state = _app_js__WEBPACK_IMPORTED_MODULE_2__["store"].getState();
+          headers = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + state.loginReducer._token
+          };
+          console.log("headers from user saga", headers);
+          _context.next = 5;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('/api/auth/charity', {
+            method: 'POST',
+            headers: headers
+          }));
+
+        case 5:
+          res = _context.sent;
+          _context.next = 8;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(res.json());
+
+        case 8:
+          data = _context.sent;
+          return _context.abrupt("return", data.status);
+
+        case 10:
+        case "end":
+          return _context.stop();
+      }
     }
   });
 };
 
 function handleLogin() {
   var canCreateCharity;
-  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function handleLogin$(_context) {
+  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function handleLogin$(_context2) {
     while (1) {
-      switch (_context.prev = _context.next) {
+      switch (_context2.prev = _context2.next) {
         case 0:
-          _context.prev = 0;
-          _context.next = 3;
+          _context2.prev = 0;
+          _context2.next = 3;
           return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["put"])({
             type: 'setHasCharit',
-            showRegisterLink: false
-          });
-
-        case 3:
-          _context.next = 5;
-          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["call"])(hasUserCharity);
-
-        case 5:
-          canCreateCharity = _context.sent;
-          console.log(canCreateCharity);
-          _context.next = 9;
-          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["put"])({
-            type: 'setHasNotCharit',
             showRegisterLink: true
           });
 
-        case 9:
-          _context.next = 14;
+        case 3:
+          _context2.next = 5;
+          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["call"])(hasUserCharity);
+
+        case 5:
+          canCreateCharity = _context2.sent;
+          _context2.next = 8;
+          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["put"])({
+            type: 'setHasCharit',
+            showRegisterLink: canCreateCharity
+          });
+
+        case 8:
+          _context2.next = 13;
           break;
 
-        case 11:
-          _context.prev = 11;
-          _context.t0 = _context["catch"](0);
-          console.log(_context.t0);
+        case 10:
+          _context2.prev = 10;
+          _context2.t0 = _context2["catch"](0);
+          console.log(_context2.t0);
 
-        case 14:
+        case 13:
         case "end":
-          return _context.stop();
+          return _context2.stop();
       }
     }
-  }, _marked, null, [[0, 11]]);
+  }, _marked, null, [[0, 10]]);
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["all"])([Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["takeLatest"])('login', handleLogin)]));
@@ -58382,7 +58385,8 @@ var logoutAction = {
 };
 var initialState = {
   loginSuccess: false,
-  showRegisterLink: false
+  showRegisterLink: false,
+  _token: window.localStorage.getItem('_token')
 };
 var loginReducer = function loginReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
@@ -58401,12 +58405,7 @@ var loginReducer = function loginReducer() {
 
     case "setHasCharit":
       return _objectSpread({}, state, {
-        showRegisterLink: false
-      });
-
-    case "setHasNotCharit":
-      return _objectSpread({}, state, {
-        showRegisterLink: true
+        showRegisterLink: action.showRegisterLink
       });
 
     default:
@@ -58420,11 +58419,12 @@ var loginReducer = function loginReducer() {
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
   \*****************************/
-/*! no exports provided */
+/*! exports provided: store */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "store", function() { return store; });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
@@ -58445,6 +58445,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux_saga__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! redux-saga */ "./node_modules/redux-saga/dist/redux-saga-core-npm-proxy.esm.js");
 /* harmony import */ var _App_Components_sagas_userSagas_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./App/Components/sagas/userSagas.js */ "./resources/js/App/Components/sagas/userSagas.js");
 
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var _marked =
 /*#__PURE__*/
@@ -58488,7 +58494,10 @@ function rootSaga() {
 var sagaMiddleware = Object(redux_saga__WEBPACK_IMPORTED_MODULE_12__["default"])([rootSaga]);
 
 var makeStore = function makeStore(initialState) {
-  var store = Object(redux__WEBPACK_IMPORTED_MODULE_3__["createStore"])(rootReducer, initialState, Object(redux_devtools_extension_developmentOnly__WEBPACK_IMPORTED_MODULE_4__["composeWithDevTools"])(Object(redux__WEBPACK_IMPORTED_MODULE_3__["applyMiddleware"])(sagaMiddleware)));
+  var initState = _objectSpread({}, initialState);
+
+  console.log(["[APP], initState", initState]);
+  var store = Object(redux__WEBPACK_IMPORTED_MODULE_3__["createStore"])(rootReducer, initState, Object(redux_devtools_extension_developmentOnly__WEBPACK_IMPORTED_MODULE_4__["composeWithDevTools"])(Object(redux__WEBPACK_IMPORTED_MODULE_3__["applyMiddleware"])(sagaMiddleware)));
   sagaMiddleware.run(rootSaga);
   return store;
 };
