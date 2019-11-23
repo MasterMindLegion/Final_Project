@@ -21,7 +21,7 @@ function* handleLogin() {
     try{
         yield put({
             type: 'setHasCharit',
-            showRegisterLink: true,
+            showRegisterLink: false,
         })
         const canCreateCharity = yield call(hasUserCharity)
         yield put({

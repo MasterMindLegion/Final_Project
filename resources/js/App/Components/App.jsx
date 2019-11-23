@@ -4,6 +4,7 @@ import Register from './Auth/Register.jsx';
 import Login from './Auth/Login.jsx';
 import NotFoundPage from './Layout/NotFoundPage.jsx';
 import HomePage from './Pages/HomePage.jsx';
+import Cart from './Layout/Main/Cart/Cart.jsx';
 import { connect } from 'react-redux';
 
 import CharityRegister from './Auth/CharityRegister.jsx';
@@ -13,7 +14,9 @@ class App extends React.Component {
     constructor(props) {
         super(props); 
     }
+
     render() {
+       
         return (
             <BrowserRouter>
             <Switch>
@@ -25,7 +28,7 @@ class App extends React.Component {
                <PrivateRoute exact path="/app/registerCharity">
                     <CharityRegister/>
                 </PrivateRoute>
-              {/* <Route exact path="/app/login" component={Login} /> */}
+                <Route exact path="/app/cart" component={Cart}/>
                <Route path="*" component={NotFoundPage} /> 
             </Switch>
             </BrowserRouter>

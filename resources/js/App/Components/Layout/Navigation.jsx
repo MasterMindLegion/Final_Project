@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import ModalNavigationLogin from './Modals/ModalNavigationLogin.jsx';
 import ModalNavigationRegister from './Modals/ModalNavigationRegister.jsx';
 import Logout from './../Auth/Logout.jsx';
+import Cart from './Main/Cart/Cart.jsx';
 import { connect } from 'react-redux';
 
 
@@ -23,7 +24,9 @@ import { connect } from 'react-redux';
       isOpen: !this.state.isOpen
     });
   }
+ 
   render() {
+    console.log("[NAVIGATION] cart props", this.props.items);
     return (
       <>
         <Navbar color="light" light expand="md">
@@ -44,6 +47,9 @@ import { connect } from 'react-redux';
               {this.props.showRegisterLink && <NavItem >
                 <Link to="/app/registerCharity"> registerCharity</Link>
               </ NavItem >}
+              <NavItem>
+                <Link to='/app/cart'>  Cart </ Link>     
+              </NavItem>
             </Nav>
           </Collapse>
         </Navbar>

@@ -39,7 +39,7 @@ import {store} from './../../../app';
         headers: {
             'Accept':       'application/json',
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + this.state.localToken
+            'Authorization': 'Bearer ' + _token 
         },
         body: JSON.stringify({
             name: this.state.name,
@@ -55,7 +55,6 @@ import {store} from './../../../app';
       console.log("render from ch reg", this.props.registerCharity)
         return (
           <>
-
          {this.props.charityRegister == true            
          ? <h1>allowed</h1>
          : <h1>Not </h1>
@@ -92,6 +91,7 @@ const mapStateToProps = state => {
     loginStatus: state.loginStatus,
     loginSuccess: state.loginSuccess,
     registerCharity: state.registerCharity,
+    _token : state.loginReducer._token
   };
 }
 

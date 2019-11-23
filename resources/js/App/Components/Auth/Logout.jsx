@@ -12,6 +12,7 @@ const Logout = (props) => {
     <Button type="submit" value="Login" color="secondary" onClick={handleLogout}> [Logout] Logout</Button>
   );
 }
+
 //==========
 // REDUX
 //==========
